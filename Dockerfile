@@ -23,4 +23,7 @@ RUN wget https://maven.atlassian.com/service/local/repositories/atlassian-public
 RUN rm /opt/atlassian/atlassian-confluence-5.9.10/confluence/WEB-INF/atlassian-bundled-plugins/document-conversion-library-1.2.14.jar
 RUN sed -i -e "43a CATALINA_OPTS=\"-Dconfluence.document.conversion.fontpath=/var/atlassian/application-data/confluence/fonts \${CATALINA_OPTS}\"" /opt/atlassian/atlassian-confluence-5.9.10/bin/setenv.sh
 
-ENTRYPOINT ["/opt/atlassian/atlassian-confluence-5.9.10/bin/start-confluence.sh", "-fg"]
+COPY entrypoint.sh /sbin/entrypoint.sh
+RUN chmod 755 /sbin/entrypoint.sh
+
+ENTRYPOINT ["/sbin/entrypoint.sh"]
